@@ -1,1 +1,1 @@
-#define UTS_RELEASE "4.14.356-openela-uhqqow-ksu/0ba6e867"
+#define UTS_RELEASE "4.14.356-openela-splidder-ksu/df633ac3"
