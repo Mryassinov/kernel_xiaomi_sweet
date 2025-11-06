@@ -3,13 +3,18 @@
 Custom kernel based on Linux 4.14.356 with KernelSU-Next integration.
 
 ## Features
-- KernelSU-Next support
-- Optimized for Xiaomi sweet (Redmi Note 10 Pro)
-- Based on sixteen-ksu-next branch
+- ✅ KernelSU-Next support
+- ✅ Optimized for Xiaomi sweet (Redmi Note 10 Pro)
+- ✅ Based on Android 4.14 kernel
+- ✅ Easy build script included
 
 ## Supported Devices
 - sweet (Redmi Note 10 Pro)
 - sweetin (Redmi Note 10 Pro India)
+- tucana
+- toco
+- phoenix
+- davinci
 
 ## Building
 
@@ -33,22 +38,42 @@ tar -xzf clang-r547379.tar.gz -C clang-r547379/
 
 ### Clone and Build
 ```bash
-git clone https://github.com/YOUR_USERNAME/kernel_xiaomi_sweet.git -b sixteen-ksu-next
+# Clone the repository
+git clone https://github.com/Mryassinov/kernel_xiaomi_sweet.git -b sixteen-ksu-next
 cd kernel_xiaomi_sweet
+
+# Initialize KernelSU-Next submodule
 git submodule update --init --recursive
+
+# Build the kernel
 ./build.sh
 ```
 
 When prompted, enter your device codename (e.g., `sweet`).
 
+The script will automatically:
+- Configure the kernel
+- Compile using all CPU cores
+- Create a flashable ZIP file
+
+### Clean Build
+```bash
+./build.sh --clean
+```
+
 ## Installation
-1. Flash the generated ZIP file via TWRP/custom recovery
-2. Install [KernelSU-Next Manager](https://github.com/KernelSU-Next/KernelSU-Next/releases)
-3. Reboot and enjoy!
+1. Copy the generated ZIP file to your device
+2. Boot into TWRP/custom recovery
+3. Flash the ZIP file
+4. Install [KernelSU-Next Manager](https://github.com/KernelSU-Next/KernelSU-Next/releases)
+5. Reboot and enjoy root access!
+
+## Download
+Check the [Releases](https://github.com/Mryassinov/kernel_xiaomi_sweet/releases) section for pre-built kernels.
 
 ## Credits
 - [TheHewra](https://github.com/TheHewra) - Original kernel source
-- [KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) - Root solution
+- [KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) - Kernel-based root solution
 - Xiaomi - Device sources
 
 ## License
