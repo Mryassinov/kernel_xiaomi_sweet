@@ -1,0 +1,49 @@
+name: Build KernelSU Manager
+
+# This workflow runs on any push to the repository.
+# It can also be run manually from the Actions tab.
+on: [push, workflow_dispatch]
+
+jobs:
+  build:
+    # Use the latest version of Ubuntu to run the job
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository code
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          # This ensures that if KernelSU-Next is a submodule, it's also checked out
+          submodules: 'recursive'
+
+      # Step 2: Set up the Java Development Kit (JDK), required for building Android apps
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # Step 3: Set up Gradle with caching for faster builds
+      - name: Set up Gradle
+        uses: gradle/gradle-build-action@v3
+
+      # Step 4: Grant execute permission to the gradlew script
+      # This is a crucial step that is often missed.
+      - name: Grant execute permission to gradlew
+        working-directory: ./KernelSU-Next/manager
+        run: chmod +x ./gradlew
+
+      # Step 5: Build the debug APK using the Gradle wrapper
+      - name: Build with Gradle
+        working-directory: ./KernelSU-Next/manager
+        run: ./gradlew assembleDebug
+
+      # Step 6: Upload the final APK as a downloadable artifact
+      - name: Upload APK as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          # The name of the artifact that will be available for download
+          name: manager-apk
+          # The path to the file to upload
+          path: KernelSU-Next/manager/build/outputs/apk/debug/app-debug.apk
